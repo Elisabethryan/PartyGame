@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="*"
+        android:weightSum="6" >
+
+        <TableLayout>
+
+            <TextView
+                android:id="@+id/text_view_id"
+                android:layout_width="match_parent"
+                android:layout_height="30pt"
+                android:layout_gravity="center"
+                android:text="Choose a Deck!"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20pt" />
+        </TableLayout>
+
+        <TableRow android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_marginTop="3pt"
+                android:layout_marginLeft="3pt"
+                android:layout_marginRight="1.5pt"
+                android:onClick="startGame1"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_marginTop="3pt"
+                android:layout_marginLeft="1.5pt"
+                android:layout_marginRight="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="2" />
+        </TableRow>
+
+        <TableRow android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/button21"
+                android:layout_marginTop="3pt"
+                android:layout_marginLeft="3pt"
+                android:layout_marginRight="1.5pt"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/button22"
+                android:layout_marginLeft="1.5pt"
+                android:layout_marginRight="3pt"
+                android:layout_marginTop="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="4" />
+
+        </TableRow>
+
+        <TableRow android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/button31"
+                android:layout_marginTop="3pt"
+                android:layout_marginLeft="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_marginRight="1.5pt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="5" />
+
+            <Button
+                android:id="@+id/button32"
+                android:layout_marginLeft="1.5pt"
+                android:layout_marginRight="3pt"
+                android:layout_marginTop="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="6" />
+        </TableRow>
+
+        <TableRow android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/button41"
+                android:layout_marginTop="3pt"
+                android:layout_marginLeft="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_marginRight="1.5pt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/button42"
+                android:layout_marginTop="3pt"
+                android:background="@color/colorPrimary"
+                android:layout_marginLeft="1.5pt"
+                android:layout_marginRight="3pt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="8" />
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
