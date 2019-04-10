@@ -50,37 +50,27 @@ public class ScoreActivity extends AppCompatActivity {
         scoreTextMessage = (TextView) findViewById(R.id.scoremessage);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //define our things
         int score = 0;
         ArrayList<List<Object>> playedWords = null ;
-        /* Intent mIntent = getIntent();
-        score = mIntent.getIntExtra("score", 0);
-        mTextMessage.setText(String.valueOf(score));
-        scoreTextMessage.setText("Your score is:");*/
 
+        //get extras from previous activity
         Bundle extra = getIntent().getExtras();
-
         if (extra != null){
             playedWords = (ArrayList<List<Object>>) extra.get("playedWords");
             score =  extra.getInt("score");
         }
 
-        ArrayList<String> arraylist = new ArrayList<>();
-        arraylist.add("listgrejja 1");
-        arraylist.add("listgrejja 2");
-
+        //show the score
         scoreTextMessage.setText("Your score is:");
         mTextMessage.setText(String.valueOf(score));
-        Log.d("playedwords", playedWords.toString());
 
+        //display our list of words with their true(correct) or false(pass) status
         ArrayAdapter adapter = new ArrayAdapter<>(ScoreActivity.this, android.R.layout.simple_list_item_1, playedWords);
-
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
 
-
-      /*  for(int i=0; i<playedWords.size()-1; i++){
-
-        }*/
     }
 
 }

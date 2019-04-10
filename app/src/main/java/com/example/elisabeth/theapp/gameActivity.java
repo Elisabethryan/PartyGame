@@ -139,7 +139,7 @@ public class gameActivity extends AppCompatActivity {
                         goToScore();
                     }
                 },
-                10000
+                30000
         );
           showWord();
 
@@ -155,12 +155,12 @@ public class gameActivity extends AppCompatActivity {
     String currentWord;
 
     public void goToScore(){
-        Log.d("timer", "game ended");
-        Log.d("score", "score: " + this.Score);
+        //create intent
         Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
+        //add words and the score
         intent.putExtra("score", this.Score);
         intent.putExtra("playedWords", this.playedWords);
-        Log.d("playedwords", this.playedWords.toString());
+        //go to score
         startActivity(intent);
     }
 
@@ -169,11 +169,14 @@ public class gameActivity extends AppCompatActivity {
         //startActivity(intent);
     }
     public void addPlayedWord(boolean ifCorrect){
+        //create new object for holding the word and the status
         ArrayList<Object> listInner = new ArrayList();
+        //add the word
         listInner.add(currentWord);
+        //add the pass/correct status
         listInner.add(ifCorrect);
+        //add this object to the list of played words
         playedWords.add(listInner);
-        Log.d("playedword", currentWord);
     }
 
     public void pass(View view)
@@ -210,8 +213,10 @@ public class gameActivity extends AppCompatActivity {
         //if new word save it as current and set it in game
             currentWord = word;
             tempList.add(word);
+            //display double words as two separate words
             word = word.replace("-"," ");
             word = word.replace('-',' ');
+            //set the word
             theMessage.setText(word);
     };
 
