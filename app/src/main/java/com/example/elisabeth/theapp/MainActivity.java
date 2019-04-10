@@ -7,10 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -36,60 +38,46 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        //The example-file "Uppsala" is written onCreate
+        WriteFile(this, "1", "UKK Fyrisån Ångström Sopplunch Värmlands-nation Ekonom Jurist Socionom Studentportalen Studium Ladok Engelska-parken Ralph-Lauren");
+        WriteFile(this, "2", "UKK Fyrisån Ångström Sopplunch Värmlands-nation Ekonom Jurist Socionom Studentportalen Studium Ladok Engelska-parken Ralph-Lauren");
+
+        //define the button
+        Button one = findViewById(R.id.button11);
+        //set the onClick listener
+        one.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("onclick", "that was a short click");
+                playGame1(v);
+            }
+        });
+        //WARNING stupid ugly solution with repeat code, will be made dynamic
+        Button two = findViewById(R.id.button12);
+        one.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("onclick", "that was a short click");
+                playGame2(v);
+            }
+        });
+        //set the long click listener for first button
+        one.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("onclick", "that was a long click");
+                //start our options activity
+                startActivity(new Intent(MainActivity.this, OptionsActivity.class));
+                // TODO Auto-generated method stub
+                //Create the pop up
+                PopupWindow options = new PopupWindow();
+                LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View customView = layoutInflater.inflate(R.layout.activity_options,null);
+                //display the pop up
+                options.showAtLocation(customView, Gravity.CENTER, 0, 0);
+                return true;
+            }
+        });
     }
-/*
-        class FileHandling extends MainActivity{
-            public ArrayList<String> records;
 
-            public FileHandling() {
-                records = new ArrayList<String>();
-
-            };
-
-            private void addToRecords(String[] arrayOfWords){
-                for(int i=0;i<arrayOfWords.length;i++){
-                    records.add(arrayOfWords[i]);
-                }
-            };
-
-            private List<String> WriteFile(Context context, String filename, String filecontents){
-
-                byte[] filebytes = filecontents.getBytes();
-                FileOutputStream outputStream;
-
-                try {
-                    outputStream = context.getApplicationContext().openFileOutput(filename, context.MODE_PRIVATE);
-                    outputStream.write(filebytes);
-                    outputStream.close();
-                } catch (Exception e) {
-                    Log.d("myTag", "catch");
-
-                    e.printStackTrace();
-                }
-                    return null;
-            }
-
-            private String[] ReadFile(Context context, String filename){
-
-                FileInputStream inputStream;
-                byte[] b = new byte[60];
-
-                try {
-                    inputStream = context.getApplicationContext().openFileInput(filename);
-                    inputStream.read(b);
-                    String s = new String(b, "UTF-8").trim();
-                    String[] arrayOfWords = s.split("\\s+");
-                    inputStream.close();
-                    addToRecords(arrayOfWords);
-                    return arrayOfWords;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return new String[1];
-                }
-            }
-//gör varje deck till ett eget objekt?
-        }
-*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-    private List<String> WriteFile(Context context, String filename, String filecontents){
+    //write file given name of file and desired contents, WARN overwrites!!
+    private void WriteFile(Context context, String filename, String filecontents){
         //initialize
         byte[] filebytes = filecontents.getBytes();
         FileOutputStream outputStream;
@@ -110,26 +98,23 @@ public class MainActivity extends AppCompatActivity {
             outputStream.close();
         } catch (Exception e) {
             Log.d("myTag", "catch");
-
             e.printStackTrace();
         }
-        return null;
     }
 
+    //read file given filename
     private String[] ReadFile(Context context, String filename){
         //initialize
         FileInputStream inputStream;
-        byte[] b = new byte[60];
+        byte[] b = new byte[1000];
 
         try {
-            //read in to one string
+            //read into one string
             inputStream = context.getApplicationContext().openFileInput(filename);
             inputStream.read(b);
-            //split the string into seperate words by spaces
+            //split the string into separate words by spaces
             String s = new String(b, "UTF-8").trim();
-            Log.d("string trimmed", s);
             String[] arrayOfWords = s.split("\\s+"); // split("-", 150)
-            Log.d("string split", arrayOfWords[1]);
             //close
             inputStream.close();
             return arrayOfWords;
@@ -139,58 +124,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-    void startGame1(View view){
-        WriteFile(this, "myfile", "banan rostade-mackor word hey man banana-split");
-        Log.d("tag", "före playgame");
-        playGame(1);
+    //play the game with the array connected to the button
+    void playGame1(View view){
+        //open file with the right name
+        String[] arrayOfWords = ReadFile(this, "1");
+        //play the game after changing the type
+        launchGame(decodeArray(arrayOfWords));
+    }
+    //hardcoded for each button, THIS WILL BE FIXED
+    void playGame2(View view){
+        String[] arrayOfWords = ReadFile(this, "2");
+        launchGame(decodeArray(arrayOfWords));
     }
 
-    void playGame(int i){
-        //read in string[] and convert to arraylist
-       // String[] arrayOfWords = ReadFile(this, "root" + i);
-        String[] arrayOfWords = ReadFile(this, "myfile");
+    //convert our string[] from readFile to ArrayList<String> accepted for launching intent
+    ArrayList<String> decodeArray(String[] arrayOfWords){
         int l = arrayOfWords.length;
+        //make list of arrays
         List<String> finalArray = new ArrayList<String>(Arrays.asList(arrayOfWords));
-        ArrayList<String> list = new ArrayList<String>(11);
+        //convert to arraylist of strings
+        ArrayList<String> list = new ArrayList<String>(l);
         for (String s : arrayOfWords) {
             list.add(s);
         }
-        //start next activity (game) with the list
+        return list;
+    }
+
+    //launch the game with the array of choice
+    void launchGame(ArrayList<String> list){
         Intent intent = new Intent(this, gameActivity.class);
+        //add the list to our intent
         intent.putStringArrayListExtra("mylist", list);
+        //play! (go to game activity)
         startActivity(intent);
     }
-/*
-    public void goToGame(View view) {
-        FileHandling filehandler = new FileHandling();
-        String fileContents = "Alla möjliga namn jag kan komma på omg detta går okej";
-        //filehandler.WriteFile(this, "root", fileContents);
-        //get list
-        String[] words = filehandler.ReadFile(this, "root");
-        //convert to arraylist
-        List<String> wordList = new ArrayList<String>(Arrays.asList(words));
 
-        //start next activity
-        Intent intent = new Intent(this, gameActivity.class);
-        intent.putStringArrayListExtra("mylist", filehandler.records);
-        startActivity(intent);
-    };
-
-*/
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

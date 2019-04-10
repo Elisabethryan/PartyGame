@@ -6,74 +6,57 @@
     android:background="@color/colorPrimary"
     tools:context=".gameActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"
-        android:keepScreenOn="true"
         android:text="@string/dummy_content"
         android:textSize="50sp"
         android:textStyle="bold" />
 
-
-    <Button
-        android:id="@+id/button2"
-        android:onClick="pass"
-        android:background="@android:color/transparent"
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:gravity="start|center_vertical"
-        android:paddingLeft="10dip"
-        android:text="@string/pass_button"
-        android:layout_alignParentStart="true"
-        android:layout_width="300dp"
-        android:layout_height="match_parent" />
-
-    <Button
-        android:id="@+id/button3"
-        android:onClick="correct"
-        android:background="@android:color/transparent"
-        android:text="@string/correct_button"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:gravity="end|center_vertical"
-        android:paddingRight="10dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_width="300dp"
-        android:layout_height="match_parent" />
-     <!--   android:background="@android:color/transparent"-->
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows.
-
-          style="?metaButtonBarButtonStyle"
-
-         -->
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/fullscreen_content_control"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:textAlignment="5"
+            android:background="@android:color/transparent"
+            android:onClick="pass"
+            android:paddingLeft="10dip"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:paddingRight="10dip"
+            android:text="@string/pass_button"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="6"
+            android:layout_weight="1"
+            android:onClick="correct"
+            android:gravity="end|center_vertical"
+            android:paddingRight="10dip"
+            android:text="@string/correct_button"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
 
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

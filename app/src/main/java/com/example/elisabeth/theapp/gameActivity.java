@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 
@@ -104,7 +105,7 @@ public class gameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
+        mControlsView = findViewById(R.id.fullscreen_content_control);
         mContentView = findViewById(R.id.fullscreen_content);
 
         tempList = new ArrayList<String>();
@@ -141,6 +142,7 @@ public class gameActivity extends AppCompatActivity {
                 10000
         );
           showWord();
+
     }
 
     @Override
@@ -148,11 +150,17 @@ public class gameActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
 
     }
+
+    ArrayList<List<Object>> playedWords = new ArrayList();
+    String currentWord;
+
     public void goToScore(){
         Log.d("timer", "game ended");
         Log.d("score", "score: " + this.Score);
         Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
         intent.putExtra("score", this.Score);
+        intent.putExtra("playedWords", this.playedWords);
+        Log.d("playedwords", this.playedWords.toString());
         startActivity(intent);
     }
 
@@ -160,14 +168,31 @@ public class gameActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, MainActivity.class);
         //startActivity(intent);
     }
-    public void pass(View view){
+    public void addPlayedWord(boolean ifCorrect){
+        ArrayList<Object> listInner = new ArrayList();
+        listInner.add(currentWord);
+        listInner.add(ifCorrect);
+        playedWords.add(listInner);
+        Log.d("playedword", currentWord);
+    }
+
+    public void pass(View view)
+    {
+        Log.d("pass", currentWord);
+        boolean ifcorrect = new Boolean("False");
+        addPlayedWord(ifcorrect);
+        //show the word
         showWord();
+        //add to array
     }
     public void correct(View view){
-        this.Score = this.Score + 1;
+        //show the word
         showWord();
-        //add word to lust of correct words(save it as global variable in showWord and add?????)
-        //  correctWords.add(showWord());
+        //update score
+        this.Score = this.Score + 1;
+        //add to list
+        boolean ifcorrect = new Boolean("True");
+        addPlayedWord(ifcorrect);
     }
     public void showWord() {
         //find textview
@@ -180,25 +205,26 @@ public class gameActivity extends AppCompatActivity {
         String word = List.get(i);
         //if we've had it before dont show again
         if(tempList.contains(word)){
-
             word = findUnusedWord(word, random, indexAmount, List.size(), 0);
         }
-        //if new word set it
+        //if new word save it as current and set it in game
+            currentWord = word;
             tempList.add(word);
-            Log.d("word", "word: " + word);
             word = word.replace("-"," ");
-            Log.d("word", "fixed word fnuttar" + word);
-        word = word.replace('-',' ');
-        Log.d("word", "fixed word enfnutt" + word);
+            word = word.replace('-',' ');
             theMessage.setText(word);
     };
 
     public String findUnusedWord(String word, Random random, int indexAmount, int List_length, int max_recursing){
+        //the word to replace
         String newWord = word;
-        if(max_recursing < 5){
-        if(tempList.contains(word)){
+        //if weve recursed less than 10 times
+        if(max_recursing < 10){
+            if(tempList.contains(word)){
                 int i = random.nextInt(indexAmount);
+                //set new word
                 newWord = List.get(i);
+                //count how many times we go through since recursive
                 findUnusedWord(newWord, random, indexAmount, List_length, max_recursing+1);
             }
         }

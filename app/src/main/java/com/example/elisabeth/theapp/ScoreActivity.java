@@ -5,8 +5,14 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreActivity extends AppCompatActivity {
    // int score = 0;
@@ -44,21 +50,37 @@ public class ScoreActivity extends AppCompatActivity {
         scoreTextMessage = (TextView) findViewById(R.id.scoremessage);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        int score;
-        Intent mIntent = getIntent();
+        int score = 0;
+        ArrayList<List<Object>> playedWords = null ;
+        /* Intent mIntent = getIntent();
         score = mIntent.getIntExtra("score", 0);
         mTextMessage.setText(String.valueOf(score));
+        scoreTextMessage.setText("Your score is:");*/
+
+        Bundle extra = getIntent().getExtras();
+
+        if (extra != null){
+            playedWords = (ArrayList<List<Object>>) extra.get("playedWords");
+            score =  extra.getInt("score");
+        }
+
+        ArrayList<String> arraylist = new ArrayList<>();
+        arraylist.add("listgrejja 1");
+        arraylist.add("listgrejja 2");
+
         scoreTextMessage.setText("Your score is:");
-       /* if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                score= 0;
-            } else {
-                score = (int)extras.get("score");
-            }
-        } else {
-            score = (int) savedInstanceState.getSerializable("score");
-            }*/
+        mTextMessage.setText(String.valueOf(score));
+        Log.d("playedwords", playedWords.toString());
+
+        ArrayAdapter adapter = new ArrayAdapter<>(ScoreActivity.this, android.R.layout.simple_list_item_1, playedWords);
+
+        ListView listView = findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+
+
+      /*  for(int i=0; i<playedWords.size()-1; i++){
+
+        }*/
     }
 
 }
