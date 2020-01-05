@@ -1,7 +1,7 @@
 # PartyGame
 
 This is a small game I have (re)created, feel free to play it! <br/>
-Choose a set of words to play and face the phone away from you towards a friend. They have to explain the word on the screen: if you guess correctly press the right side of the screen, to pass press the left side. The game goes on for 30 secs (will be 2 minutes in the finished version)
+Choose a set of words to play and face the phone away from you towards a friend. They have to explain the word on the screen without using that specific word: if you guess correctly press the right side of the screen, to pass press the left side. The game goes on for 30 secs (this will be 2 minutes in the finished version)
 
 This is a list of things I plan to implement as I continue working on the project:
 - Adding words to the "word-sets" from the main menu 
